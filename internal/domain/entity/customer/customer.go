@@ -3,33 +3,34 @@ package customer
 import (
 	"errors"
 
+	"github.com/bernardinorafael/fc-ddd-pattern/internal/domain/valueobj/address"
 	"github.com/google/uuid"
 )
 
 type Customer struct {
-	id      string
-	name    string
-	address string
-	enabled bool
+	ID      string
+	Name    string
+	Address address.Address
+	Enabled bool
 }
 
-func New(name, address string) (*Customer, error) {
-	c := Customer{
-		id:      uuid.New().String(),
-		name:    name,
-		enabled: false,
-		address: address,
+func New(name string, addr address.Address) (*Customer, error) {
+	customer := Customer{
+		ID:      uuid.New().String(),
+		Name:    name,
+		Enabled: false,
+		Address: addr,
 	}
 
-	if err := c.validate(); err != nil {
+	if err := customer.validate(); err != nil {
 		return nil, err
 	}
 
-	return &c, nil
+	return &customer, nil
 }
 
 func (c *Customer) validate() error {
-	if len(c.name) == 0 {
+	if len(c.Name) == 0 {
 		return errors.New("customer name cannot be empty")
 	}
 
@@ -37,20 +38,16 @@ func (c *Customer) validate() error {
 }
 
 func (c *Customer) Enable() error {
-	if len(c.address) == 0 {
-		return errors.New("cannot enable a customer if they doesnt have an address")
-	}
-
-	c.enabled = true
+	c.Enabled = true
 	return nil
 }
 
 func (c *Customer) Disable() {
-	c.enabled = false
+	c.Enabled = false
 }
 
 func (c *Customer) ChangeName(name string) error {
-	c.name = name
+	c.Name = name
 
 	if err := c.validate(); err != nil {
 		return err
