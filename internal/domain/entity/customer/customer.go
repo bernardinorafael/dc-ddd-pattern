@@ -21,11 +21,9 @@ func New(name string, addr address.Address) (*Customer, error) {
 		Enabled: false,
 		Address: addr,
 	}
-
 	if err := customer.validate(); err != nil {
 		return nil, err
 	}
-
 	return &customer, nil
 }
 
@@ -33,13 +31,11 @@ func (c *Customer) validate() error {
 	if len(c.Name) == 0 {
 		return errors.New("customer name cannot be empty")
 	}
-
 	return nil
 }
 
-func (c *Customer) Enable() error {
+func (c *Customer) Enable() {
 	c.Enabled = true
-	return nil
 }
 
 func (c *Customer) Disable() {
@@ -48,10 +44,8 @@ func (c *Customer) Disable() {
 
 func (c *Customer) ChangeName(name string) error {
 	c.Name = name
-
 	if err := c.validate(); err != nil {
 		return err
 	}
-
 	return nil
 }

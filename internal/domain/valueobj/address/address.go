@@ -17,11 +17,9 @@ func New(street, city, zip string) (*Address, error) {
 		City:   city,
 		Zip:    zip,
 	}
-
 	if err := address.validate(); err != nil {
 		return nil, err
 	}
-
 	return &address, nil
 }
 
@@ -35,7 +33,6 @@ func (a *Address) validate() error {
 	if len(a.Zip) == 0 {
 		return errors.New("zip cannot be empty")
 	}
-
 	return nil
 }
 

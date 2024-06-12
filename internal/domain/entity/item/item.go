@@ -15,6 +15,5 @@ func New(name string, price float64) (*Item, error) {
 		Name:  name,
 		Price: price,
 	}
-
 	return &item, nil
 }
