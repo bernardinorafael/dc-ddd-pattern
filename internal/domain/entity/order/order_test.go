@@ -27,7 +27,7 @@ func TestOrderEntity_New(t *testing.T) {
 		_, err := order.New("1", emptyItems)
 
 		assert.NotNil(t, err)
-		assert.EqualError(t, err, "order must have at least one order item")
+		assert.EqualError(t, err, "order must have at least one item")
 	})
 
 	t.Run("Should calculate total correctly", func(t *testing.T) {
