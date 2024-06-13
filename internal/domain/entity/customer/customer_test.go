@@ -10,15 +10,13 @@ import (
 
 func TestCustomerEntity_New(t *testing.T) {
 	t.Run("Should throw error if customer name is empty", func(t *testing.T) {
-		addr := address.Address{Street: "street xpto", City: "city example", Zip: "99999"}
-		_, err := customer.New("", addr)
+		_, err := customer.New("", address.Address{})
 
 		assert.EqualError(t, err, "customer name cannot be empty")
 	})
 
 	t.Run("Should change customer name", func(t *testing.T) {
-		addr := address.Address{Street: "street xpto", City: "city example", Zip: "99999"}
-		c, err := customer.New("john doe", addr)
+		c, err := customer.New("john doe", address.Address{})
 
 		assert.Nil(t, err)
 		assert.Equal(t, c.Name, "john doe")
@@ -31,21 +29,38 @@ func TestCustomerEntity_New(t *testing.T) {
 	})
 
 	t.Run("Should activate a customer", func(t *testing.T) {
-		addr := address.Address{Street: "street xpto", City: "city example", Zip: "99999"}
-		c, _ := customer.New("john doe", addr)
+		c, _ := customer.New("john doe", address.Address{})
 
 		c.Enable()
 		assert.True(t, c.Enabled, true)
 	})
 
 	t.Run("Should disable a customer", func(t *testing.T) {
-		addr := address.Address{Street: "street xpto", City: "city example", Zip: "99999"}
-		c, _ := customer.New("john doe", addr)
+		c, _ := customer.New("john doe", address.Address{})
 
 		c.Enable()
 		assert.True(t, c.Enabled)
 
 		c.Disable()
 		assert.False(t, c.Enabled)
+	})
+
+	t.Run("Should increase customer rewards correctly", func(t *testing.T) {
+		c, err := customer.New("john doe", address.Address{})
+
+		assert.Nil(t, err)
+		assert.Equal(t, c.Rewards, 0)
+
+		err = c.IncreaseRewards(10)
+		assert.Nil(t, err)
+		assert.Equal(t, c.Rewards, 10)
+	})
+
+	t.Run("Should throw an error if rewards points is lesser than zero", func(t *testing.T) {
+		c, _ := customer.New("john doe", address.Address{})
+
+		err := c.IncreaseRewards(0)
+		assert.NotNil(t, err)
+		assert.EqualError(t, err, "rewards points must be greater than zero")
 	})
 }

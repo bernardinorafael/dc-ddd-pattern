@@ -8,10 +8,11 @@ import (
 )
 
 type Customer struct {
-	ID      string
-	Name    string
-	Address address.Address
-	Enabled bool
+	ID      string          `json:"id"`
+	Name    string          `json:"name"`
+	Address address.Address `json:"address"`
+	Rewards int             `json:"rewards"`
+	Enabled bool            `json:"enabled"`
 }
 
 func New(name string, addr address.Address) (*Customer, error) {
@@ -20,6 +21,7 @@ func New(name string, addr address.Address) (*Customer, error) {
 		Name:    name,
 		Enabled: false,
 		Address: addr,
+		Rewards: 0,
 	}
 	if err := customer.validate(); err != nil {
 		return nil, err
@@ -47,5 +49,14 @@ func (c *Customer) ChangeName(name string) error {
 	if err := c.validate(); err != nil {
 		return err
 	}
+	return nil
+}
+
+func (c *Customer) IncreaseRewards(rewards int) error {
+	if rewards < 1 {
+		return errors.New("rewards points must be greater than zero")
+	}
+	c.Rewards += rewards
+
 	return nil
 }

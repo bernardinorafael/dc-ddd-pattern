@@ -11,7 +11,7 @@ type Item struct {
 
 func New(name string, price float64) (*Item, error) {
 	item := Item{
-		ID:    uuid.New().String(),
+		ID:    uuid.NewString(),
 		Name:  name,
 		Price: price,
 	}
