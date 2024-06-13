@@ -8,7 +8,6 @@ import (
 	"github.com/bernardinorafael/fc-ddd-pattern/internal/domain/entity/item"
 	"github.com/bernardinorafael/fc-ddd-pattern/internal/domain/entity/order"
 	"github.com/bernardinorafael/fc-ddd-pattern/internal/domain/entity/product"
-	"github.com/bernardinorafael/fc-ddd-pattern/internal/domain/valueobj/address"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -74,7 +73,7 @@ func TestDomainService_GetOrdersAmount(t *testing.T) {
 
 func TestDomainService_PlaceOrder(t *testing.T) {
 	t.Run("Should throw an error if order items is empty", func(t *testing.T) {
-		c, _ := customer.New("john doe", address.Address{})
+		c, _ := customer.New("john doe", "john.doe@email.com")
 		_, err := domainservice.PlaceOrder(c, []item.Item{})
 
 		assert.NotNil(t, err)
@@ -85,7 +84,7 @@ func TestDomainService_PlaceOrder(t *testing.T) {
 		iphone, _ := item.New("iphone 13 pro max", 100.0)
 		macbook, _ := item.New("macbook pro m3 pro", 100.0)
 
-		c, _ := customer.New("john doe", address.Address{})
+		c, _ := customer.New("john doe", "john.doe@email.com")
 		order, err := domainservice.PlaceOrder(c, []item.Item{*iphone, *macbook})
 
 		assert.Nil(t, err)

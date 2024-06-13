@@ -3,25 +3,25 @@ package customer
 import (
 	"errors"
 
-	"github.com/bernardinorafael/fc-ddd-pattern/internal/domain/valueobj/address"
+	"github.com/bernardinorafael/fc-ddd-pattern/internal/domain/entity/vobject/email"
 	"github.com/google/uuid"
 )
 
 type Customer struct {
-	ID      string          `json:"id"`
-	Name    string          `json:"name"`
-	Address address.Address `json:"address"`
-	Rewards int             `json:"rewards"`
-	Enabled bool            `json:"enabled"`
+	ID      string      `json:"id"`
+	Name    string      `json:"name"`
+	Email   email.Email `json:"email"`
+	Rewards int         `json:"rewards"`
+	Enabled bool        `json:"enabled"`
 }
 
-func New(name string, addr address.Address) (*Customer, error) {
+func New(name, emailAddr string) (*Customer, error) {
 	customer := Customer{
-		ID:      uuid.New().String(),
+		ID:      uuid.NewString(),
 		Name:    name,
-		Enabled: false,
-		Address: addr,
+		Email:   email.Email(emailAddr),
 		Rewards: 0,
+		Enabled: false,
 	}
 	if err := customer.validate(); err != nil {
 		return nil, err
