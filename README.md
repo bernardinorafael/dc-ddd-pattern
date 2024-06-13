@@ -1,4 +1,4 @@
-# DDD - DDD - Tactical Modeling and Patterns
+# DDD - Tactical Modeling and Patterns
 
 ## Description
 
