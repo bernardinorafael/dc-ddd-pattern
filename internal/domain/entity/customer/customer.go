@@ -15,11 +15,11 @@ type Customer struct {
 	Enabled bool        `json:"enabled"`
 }
 
-func New(name, emailAddr string) (*Customer, error) {
+func New(customerName, customerEmail string) (*Customer, error) {
 	customer := Customer{
 		ID:      uuid.NewString(),
-		Name:    name,
-		Email:   email.Email(emailAddr),
+		Name:    customerName,
+		Email:   email.Email(customerEmail),
 		Rewards: 0,
 		Enabled: false,
 	}
